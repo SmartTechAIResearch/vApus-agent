@@ -244,7 +244,7 @@ public class Entities extends ArrayList<Entity> {
             }
         }
 
-        if (lastLevel != -1) {
+        if (lastLevel > 0) {
             ArrayList<String> counters = getCounters(lastLevel);
 
             boolean nullFound = false, notNullFound = false;
