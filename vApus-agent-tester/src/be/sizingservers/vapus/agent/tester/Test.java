@@ -18,7 +18,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -87,9 +91,9 @@ public class Test extends Thread {
             writeRead(out, "start", in);
 
             if (this.verbose) {
-                System.out.println("Test " + this.id + " Reading and parsing counters 10 times...");
+                System.out.println("Test " + this.id + " Reading and parsing counters 3 times...");
             }
-            for (int i = 0; i != 10; i++) {
+            for (int i = 0; i != 3; i++) {
                 parseCounters(read(in, "[{\"name\":\"entity\",\"isAvailable\":true,\"subs\":[{\"name\":\"header\",\"subs\":..."));
             }
 
@@ -152,19 +156,32 @@ public class Test extends Thread {
             Entities entities = this.gson.fromJson(wdyh, Entities.class);
             this.wiwEntities = new Entities();
 
-            boolean addedOne = false;
-            // Add minimum one, otherwise parsing the values can go wrong if headers are missing at the last level.
-            while (!addedOne) {
-                for (int i = 0; i != entities.size(); i++) {
-                    //Random seed, otherwise System.currentTimeMillis() is used and I do not want to let the thread sleep.
-                    Random random = new Random(UUID.randomUUID().hashCode());
-                    if (random.nextBoolean()) {
-                        addedOne = true;
-                        Entity entity = entities.get(i);
-                        Entity newEntity = new Entity(entity.getName(), entity.isAvailable());
-                        this.wiwEntities.add(newEntity);
+            boolean hasAvailableEntities = false;
+            for (int i = 0; i != entities.size(); i++) {
+                if (entities.get(i).isAvailable()) {
+                    hasAvailableEntities = true;
+                    break;
+                }
+            }
 
-                        chanceCopySubs(entity, newEntity);
+            if (hasAvailableEntities) {
+                boolean addedOne = false;
+                // Add minimum one, otherwise parsing the values can go wrong if headers are missing at the last level.
+                while (!addedOne) {
+                    for (int i = 0; i != entities.size(); i++) {
+                        //Random seed, otherwise System.currentTimeMillis() is used and I do not want to let the thread sleep.
+                        Random random = new Random(UUID.randomUUID().hashCode());
+                        if (random.nextBoolean()) {
+                            Entity entity = entities.get(i);
+                            if (entity.isAvailable()) {
+                                addedOne = true;
+                                
+                                Entity newEntity = new Entity(entity.getName(), entity.isAvailable());
+                                this.wiwEntities.add(newEntity);
+
+                                chanceCopySubs(entity, newEntity);
+                            }
+                        }
                     }
                 }
             }
@@ -249,7 +266,9 @@ public class Test extends Thread {
         parsedCounters.addAll(entities.getCountersLastLevel());
 
         if (this.verbose) {
-            System.out.println("Test " + this.id + " Parsed: " + Combiner.combine(parsedCounters, " "));
+            DateFormat df = new SimpleDateFormat("HH:mm:ss");
+            Date time = Calendar.getInstance().getTime();
+            System.out.println("Test " + this.id + " Parsed (" + df.format(time) + "): " + Combiner.combine(parsedCounters, " "));
         }
     }
 }

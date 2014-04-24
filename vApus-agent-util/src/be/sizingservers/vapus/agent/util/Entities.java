@@ -53,7 +53,12 @@ public class Entities extends ArrayList<Entity> {
      * @throws java.lang.Exception
      */
     public ArrayList<String> getCountersLastLevel() throws Exception {
-        return getCounters(getLevelCount() - 1);
+        int level = getLevelCount() - 1;
+        if (level < 1 && !super.get(0).isAvailable()) {
+            return new ArrayList<String>();
+        }
+
+        return getCounters(level);
     }
 
     /**
@@ -181,7 +186,7 @@ public class Entities extends ArrayList<Entity> {
         --level;
         for (int i = 0; i != super.size(); i++) {
             ArrayList<CounterInfo> subCounterInfos = super.get(i).getCounterInfos(level);
-            if (subCounterInfos.isEmpty()) {
+            if (super.get(i).isAvailable() && subCounterInfos.isEmpty()) {
                 throw new NullPointerException("CounterInfos does not exist at the given level (" + givenLevel + ").");
             } else {
                 counterInfos.addAll(subCounterInfos);
@@ -288,7 +293,8 @@ public class Entities extends ArrayList<Entity> {
 
     /**
      * We do not use the buggy java clone thing, instead we use this.
-     * @return 
+     *
+     * @return
      */
     public Entities safeClone() {
         Entities clone = new Entities();
