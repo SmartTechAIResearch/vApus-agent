@@ -20,20 +20,24 @@ public class Path {
      * Gets the path of the current executing jar, filename excluded. Ends with
      * a / or a \ (OS specific).
      *
+     * @param cls
      * @return An empty String if the jar path could not be determined.
-     * @throws java.lang.Exception The determined jar path does not end with .jar, please check the compile properties for your app.
      */
-    public static String getJarParrentPath() throws Exception {
-        String jarPath = getJarPath(true);
+    public static String getJarParrentPath(Class cls) {
+        String jarPath = getJarPath(cls, true);
         if (jarPath.length() == 0) {
             return "";
         }
 
         String delimiter = "" + jarPath.charAt(jarPath.length() - 1);
+        
+        String path = jarPath;
 
-        File jarFile = new File(jarPath);
-
-        String path = jarFile.getParentFile().getPath();
+        if (path.endsWith(".jar" + delimiter)) {
+            File jarFile = new File(jarPath);
+            path = jarFile.getParentFile().getAbsolutePath();
+        }
+        
         if (!path.endsWith(delimiter)) {
             path += delimiter;
         }
@@ -45,33 +49,29 @@ public class Path {
      * Gets the path of the current executing jar, filename included. Does not
      * end with the delimiter.
      *
+     * @param cls
      * @return
-     * @throws java.lang.Exception The determined path does not end with .jar, please check the compile properties for your app.
      */
-    public static String getJarPath() throws Exception {
-        return getJarPath(false);
+    public static String getJarPath(Class cls) {
+        return getJarPath(cls, false);
     }
 
     /**
      * Gets the path of the current executing jar, filename included.
      *
+     * @param cls
      * @param endWithDelimiter
      * @return An empty String if the jar path could not be determined.
-     * @throws java.lang.Exception The determined path does not end with .jar, please check the compile properties for your app.
      */
-    public static String getJarPath(boolean endWithDelimiter) throws Exception {
+    public static String getJarPath(Class cls, boolean endWithDelimiter) {
         try {
-            CodeSource codeSource = Path.class.getProtectionDomain().getCodeSource();
+            CodeSource codeSource = cls.getProtectionDomain().getCodeSource();
 
             File jarFile = new File(codeSource.getLocation().toURI().getPath());
             String jarPath = jarFile.getAbsolutePath();
 
-            String delimiter = extractDelimiter(jarPath);
-            if (!jarPath.endsWith(".jar") && !jarPath.endsWith(".jar" + delimiter)) {
-                throw new Exception("The determined path does not end with .jar, please check the compile properties for your app. (" + jarPath + ")");
-            }
-
             if (endWithDelimiter) {
+                String delimiter = extractDelimiter(jarPath);
                 if (!jarPath.endsWith(delimiter)) {
                     jarPath += delimiter;
                 }
@@ -86,11 +86,11 @@ public class Path {
     /**
      * Gets the OS specific path delimiter.
      *
+     * @param cls
      * @return An empty String if the jar path could not be determined.
-     * @throws java.lang.Exception The determined path does not end with .jar, please check the compile properties for your app.
      */
-    public static String getDelimiter() throws Exception {
-        String jarPath = getJarPath(true);
+    public static String getDelimiter(Class cls) {
+        String jarPath = getJarPath(cls, true);
         return "" + jarPath.charAt(jarPath.length() - 1);
 
     }
