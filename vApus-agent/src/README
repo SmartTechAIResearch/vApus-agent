@@ -15,17 +15,15 @@ Important: These classes are coded against Java 6 for backwards compatibility re
 1) Writing an agent
 ------------------------------
 
-A good example is the vApus-hmt monitor.
+A good example is the vApus-dstat monitor.
 
 1.1) Classes
 ------------------------------
 Basically you need three classes (+ your own helper classes):
     A monitor class: Extend from be.sizingservers.vapus.agent.Monitor.
                      Most work must be done here because getting counters is obviously very monitor-type specific.
-                     Since entities (for instance, a computer), headers and counters need to be json formatted: serialize an instance of be.sizingservers.util.Entities. 
-                     Make sure you do not have shared data between monitor instances. (One monitor per user)
-					 
-					 Related to the monitor class: 1.3 Proxies.
+                     Since entities (for instance, a computer), headers and counters need to be gson formatted, serialize an instance of be.sizingservers.util.Entities. 
+                     Make sure you do not have shared data with other monitor instances.
     
     A server class:  Extend from be.sizingservers.vapus.agent.Server and implement getNewMonitor(...).
                      This returns a new monitor that is used in the super class.
@@ -92,46 +90,3 @@ Add a logging.properties to the default package. Use following as a template:
     java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
     
     java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
-	
-
-1.3) Proxies
-------------------------------
-If you want to monitor OS specific stuff, it is most likely that you cannot do that from within a Java VM.
-Therefore you can write a proxy: Execute functions in C libraries using JNA (Java Native Access).
-
-Example for getting CPUID registers:
-
-    /*
-     * Copyright 2014 (c) Sizing Servers Lab
-     * University College of West-Flanders, Department GKG * 
-     * Author(s):
-     * 	Dieter Vandroemme
-     */
-    package be.sizingservers.vapus.hmt.agent.cpu;
- 
-    import com.sun.jna.Library;
-    import com.sun.jna.Native;
- 
-    /**
-     * JNA proxy to a binary that works on Windows and Linux.
-     */
-    public interface CPUIDProxy extends Library {
-        CPUIDProxy INSTANCE = (CPUIDProxy) Native.loadLibrary(System.getProperty("os.name").startsWith("Windows") ? "/cpuid.dll" : "/cpuid.so", CPUIDProxy.class);
-      
-        public long load(long i);
-        public long EAX();
-        public long EBX();
-        public long ECX();
-        public long EDX();
-    }
- 
-If you want to make a C library for Windows, you can make a .Net Visual Studio Solution.
-You add the nuget package for RGiesecke DllExport to your project. Check the DllExport readme for the caveats.
-
-In that case you can copy referenced binaries to the agent build folder by including a post-jar target in the Netbeans build.xml, right below the import tag.
- 
-Example:
- 
-    <target name="-post-jar"> 
-        <copy file="src/Newtonsoft.Json.dll" flatten="true" todir="${dist.dir}"/> 
-    </target>
