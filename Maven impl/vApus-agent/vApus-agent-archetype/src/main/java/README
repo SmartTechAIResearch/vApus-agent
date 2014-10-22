@@ -1,0 +1,7 @@
+Copyright 2014 (c) Sizing Servers Lab
+University College of West-Flanders, Department GKG * 
+Author(s):
+    Dieter Vandroemme
+
+Start from this archetype to create a new vApus-agent implementation. Please note that you must edit the agent project properties (e.g. name) in various files.
+See "vApus-agent README" for more info. 
