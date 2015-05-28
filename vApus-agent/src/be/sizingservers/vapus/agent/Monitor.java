@@ -93,6 +93,7 @@ public abstract class Monitor {
     /**
      * Start the monitor and send counters periodically using
      * super.server.send(String line, super.Socket)
+     * DO NOT FORGET TO SET ENTITIES.TIMESTAMP!
      */
     public abstract void start();
 
