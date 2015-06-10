@@ -1,0 +1,27 @@
+vApus-agent and vApus-agent-util hold all the base functionality to build a new monitoring agent, as described on our company wiki: http://wiki.sizingservers.be/index.php/VApus-vApus-agent_communication_protocol.
+If you want an example, take a look at for instance vApus-dstat.
+You can use vApus-agent-tester to , uhm, test your agent. You can do this in continuous integration if you want.
+
+
+Copy the lib folder to a new vApus agent root folder and reference the libraries (also the vApus-agent libs) from there. Or reference the libraries directly.
+You can use this in your automated build process.
+
+
+Above mentioned projects are (NetBeans) Ant projects because I do not like Maven (I have to screw my folder structure to get it to work). Because NetBeans does 'magical stuff' to get compilation to work, you have to do something like this if you want to script builds:
+
+	ant -f "%WORKSPACE%\vApus-wmi" -S -Dplatforms.JDK_1.6.home="C:\Program Files\Java\jdk1.6.0_45" -Dlibs.CopyLibs.classpath="C:\\Program Files\\NetBeans 8.0\\java\\ant\\extra\\org-netbeans-modules-java-j2seproject-copylibstask.jar" -Dnb.internal.action.name=rebuild clean jar
+	
+Without the copy libs your jar won't be complete!
+
+
+JDK 1.6 is used to be compatible with older JRE's on other peoples servers.
+
+
+There are 2 scripts available to run agents as daemons on Linux in the daemon folder. This is not yet available for Windows.
+
+
+PS: Take a look at the readme files in the packages.
+
+PPS:
+http://pidome.wordpress.com/2013/09/09/jenkins-netbeans-and-ant-follow-up-missing-libraries-in-manifest-file/
+https://ant.apache.org/manual/running.html ant command line options

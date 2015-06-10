@@ -6,3 +6,7 @@ Author(s):
 This project serves at functionality testing an agent implemented using the vApus-agent package be.sizingservers.vapus.agent.
 The agent must use the communication protocol as in the README of the vApus-agent project and on the Sizing Servers wiki: http://wiki.sizingservers.be/index.php/VApus-vApus-agent_communication_protocol
 Fill in the fields in vApus-agent-tester.properties to customize the test. Best practices can be found in that file.
+
+You can give a .properties file to the process as a command line argument to override the default .properties.
+Edit and use vApus-agent-tester.properties in this directory if you like.
+No properties 'merge' will happen, you need to specify everything that cannot be omitted (except for version).

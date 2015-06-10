@@ -6,6 +6,7 @@
  */
 package be.sizingservers.vapus.agent.util;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -52,6 +53,25 @@ public class PropertyHelper {
         InputStream stream = null;
         try {
             stream = PropertyHelper.class.getResourceAsStream(propertiesFile);
+            properties.load(stream);
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
+        return properties;
+    }
+     /**
+     *
+     * @param propertiesFile
+     * @return
+     * @throws IOException
+     */
+    public static Properties getExternalProperties(String propertiesFile) throws IOException {
+        Properties properties = new Properties();
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(propertiesFile);
             properties.load(stream);
         } finally {
             if (stream != null) {

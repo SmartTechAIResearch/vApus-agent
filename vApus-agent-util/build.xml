@@ -10,6 +10,17 @@
 <project name="vApus-agent-util" default="default" basedir=".">
     <description>Builds, tests, and runs the project vApus-agent-util.</description>
     <import file="nbproject/build-impl.xml"/>
+ 
+    <target description="bundle sources in a jar" name="package-sources">
+        <jar basedir="src" destfile="../lib/${application.title}/${application.title}-sources.jar"/>
+    </target>
+    <target depends="-javadoc-build" description="bundle javadoc in a jar" name="package-doc">
+        <jar basedir="dist/javadoc" destfile="../lib/${application.title}/${application.title}-javadoc.jar"/>
+    </target>
+   
+    <target name="-post-jar" depends="package-sources, package-doc"> 
+        <copy file="${dist.dir}/${application.title}.jar" flatten="true" todir="../lib/${application.title}"/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 

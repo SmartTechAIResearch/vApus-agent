@@ -28,6 +28,11 @@ public class AgentTester {
 
             String version = properties.getProperty("version");
             System.out.println("vApus-agent-tester " + version);
+                          
+            if(args.length != 0){
+                //Get and parse all the properties.
+                properties = PropertyHelper.getExternalProperties(args[0]);
+            }
 
             System.out.println("Testing with properties: " + properties.toString());
 
@@ -84,9 +89,9 @@ public class AgentTester {
 
             System.out.println("--- Done ---");
         } catch (IOException ex) {
-            System.err.println("Failed reading /vApus-agent-tester.properties: " + ex);
+            System.err.println("Failed reading properties file: " + ex);
         } catch (Exception ex) {
-            System.err.println("Failed reading /vApus-agent-tester.properties: " + ex);
+            System.err.println("Failed reading properties file: " + ex);
         }
     }
 
