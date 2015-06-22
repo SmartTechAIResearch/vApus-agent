@@ -27,7 +27,7 @@ public class Agent {
 
     /**
      *
-     * @return
+     * @return logger
      */
     public static Logger getLogger() {
         return logger;

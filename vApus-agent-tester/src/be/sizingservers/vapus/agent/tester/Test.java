@@ -6,6 +6,7 @@
  */
 package be.sizingservers.vapus.agent.tester;
 
+import be.sizingservers.vapus.agent.util.BandwidthTest;
 import be.sizingservers.vapus.agent.util.Combiner;
 import be.sizingservers.vapus.agent.util.CounterInfo;
 import be.sizingservers.vapus.agent.util.Entities;
@@ -75,6 +76,12 @@ public class Test extends Thread {
 
             writeRead(out, "name", in);
             writeRead(out, "version", in);
+            writeRead(out, "copyright", in);
+            
+            /* Should only be done whith one client.
+            testBandwidth(socket, out, in);
+            */
+            
             writeRead(out, "config", in);
             writeRead(out, "sendCountersInterval", in);
             writeRead(out, "decimalSeparator", in);
@@ -120,7 +127,12 @@ public class Test extends Thread {
     }
 
     private String writeRead(BufferedWriter out, String write, BufferedReader in) throws IOException, Exception {
-        if (this.verbose) {
+        write(out, write);
+        return read(in, write);
+    }
+
+    private void write(BufferedWriter out, String write) throws IOException{
+    if (this.verbose) {
             System.out.println("Test " + this.id + " Out: " + write.trim());
         }
         if (!write.endsWith("\n")) {
@@ -128,12 +140,7 @@ public class Test extends Thread {
         }
         out.write(write);
         out.flush();
-
-        String read = read(in, write);
-
-        return read;
     }
-
     private String read(BufferedReader in, String expectedResponse) throws IOException, Exception {
 
         String read = in.readLine();
@@ -176,7 +183,7 @@ public class Test extends Thread {
                             Entity entity = entities.getSubs().get(i);
                             if (entity.isAvailable()) {
                                 addedOne = true;
-                                
+
                                 Entity newEntity = new Entity(entity.getName(), entity.isAvailable());
                                 this.wiwEntities.getSubs().add(newEntity);
 
@@ -271,5 +278,30 @@ public class Test extends Thread {
             Date time = Calendar.getInstance().getTime();
             System.out.println("Test " + this.id + " Parsed (" + df.format(time) + "): " + Combiner.combine(parsedCounters, " "));
         }
+    }
+
+    /**
+     * Gets the bandwidths if connected but not started! You should only do this
+     * with one client at a time. Event then the numbers won't be entirely
+     * correct due to other traffic on the Nics and the fact that we are only
+     * measuring 'TCP bandwidth'.
+     *
+     * @return Bandwidth object containing up and down speed.
+     */
+    private Bandwidth testBandwidth(Socket socket, BufferedWriter out, BufferedReader in) throws IOException, Exception {
+        write(out, "bandwidth");
+        
+        Bandwidth bw = new Bandwidth();
+        bw.UploadSpeedInMbps = BandwidthTest.GetUploadSpeed(socket);
+        bw.DownloadSpeedInMbps = BandwidthTest.GetDownloadSpeed(socket);
+        
+        read(in, "bandwidth");
+        return bw;
+    }
+
+    private class Bandwidth {
+
+        public double DownloadSpeedInMbps;
+        public double UploadSpeedInMbps;
     }
 }

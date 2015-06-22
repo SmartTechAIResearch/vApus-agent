@@ -104,7 +104,7 @@ public abstract class Monitor {
 
     /**
      * If is null: parsed from wdyh is that is not null.
-     * @return
+     * @return wdyh entities
      */
     public static Entities getWDYHEntities() {
         if (Monitor.wdyhEntities == null && Monitor.wdyh != null) {
@@ -124,7 +124,7 @@ public abstract class Monitor {
     /**
      * Gets the hardware configuration.
      *
-     * @return
+     * @return config
      */
     public static String getConfig() {
         return Monitor.config;
@@ -133,7 +133,7 @@ public abstract class Monitor {
     /**
      * Get what do you have.
      * If is null: parsed from wdyhEntities is that is not null.
-     * @return
+     * @return wdyh
      */
     public static String getWDYH() {
         if (Monitor.wdyhEntities != null && Monitor.wdyh == null) {
@@ -182,7 +182,7 @@ public abstract class Monitor {
     }
 
     /**
-     * @return
+     * @return what I want entities
      */
     public Entities getWIWEntities() {
         if (this.wiwEntities == null) {

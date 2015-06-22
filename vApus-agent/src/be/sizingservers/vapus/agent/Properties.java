@@ -28,7 +28,7 @@ public class Properties {
      * Reads the name from the file vApus-agent.properties (must be in the
      * default package). The file must contain an entry like this: name=foo
      *
-     * @return
+     * @return name
      */
     public static String getName() {
         if (Properties.name == null) {
@@ -51,7 +51,7 @@ public class Properties {
      * Reads the version from the file vApus-agent.properties (must be in the
      * default package). The file must contain an entry like this: version=0.1
      *
-     * @return
+     * @return version
      */
     public static String getVersion() {
         if (Properties.version == null) {
@@ -74,7 +74,7 @@ public class Properties {
      * Reads the copyright notice from the file vApus-agent.properties (must be in the
      * default package). The file must contain an entry like this: copyright=Copyright 2014 (c) Sizing Servers Lab\nUniversity College of West-Flanders, Department GKG
      *
-     * @return
+     * @return copyright notice
      */
     public static String getCopyright() {
         if (Properties.copyright == null) {
@@ -96,7 +96,7 @@ public class Properties {
     /**
      * Constructed using name and defaultPort.
      *
-     * @return
+     * @return help
      */
     public static String getHelp() {
         if (Properties.help == null) {
@@ -119,7 +119,7 @@ public class Properties {
      * the default package). The file must contain an entry like this:
      * defaultPort=1234
      *
-     * @return
+     * @return default port
      */
     public static int getDefaultPort() {
         if (Properties.defaultPort == -1) {
@@ -143,7 +143,7 @@ public class Properties {
      * vApus-agent.properties (must be in the default package). The file must
      * contain an entry like this: sendCountersInterval=1000
      *
-     * @return
+     * @return send counters interval
      */
     public static int getSendCountersInterval() {
         if (Properties.sendCountersInterval == -1) {
@@ -167,7 +167,7 @@ public class Properties {
      * in the default package). The file must contain an entry like this:
      * decimalSeparator=.
      *
-     * @return
+     * @return decimal separator
      */
     public static String getDecimalSeparator() {
         if (Properties.decimalSeparator == null) {
