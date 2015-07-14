@@ -8,7 +8,6 @@ package be.sizingservers.vapus.agent.util;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * A helper class that handles bash commands.
@@ -137,14 +136,23 @@ public class BashHelper {
      * @throws IOException
      */
     public static String getText(InputStream stream) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        ArrayList al = getLines(stream);
+        InputStreamReader streamReader = new InputStreamReader(stream, "UTF8");
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
 
-        for (int i = 0; i != al.size(); i++) {
-            sb.append(al.get(i));
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            sb.append(line);
             sb.append('\n');
         }
-        return sb.toString().trim();
+
+        stream.close();
+        streamReader.close();
+        bufferedReader.close();
+
+        String text = sb.toString().trim();
+        return text;
     }
 
     /**
@@ -155,12 +163,17 @@ public class BashHelper {
      * @throws IOException
      */
     public static ArrayList<String> getLines(InputStream stream) throws IOException {
-        Scanner scan = new Scanner(new InputStreamReader(stream, "UTF8"));
+       InputStreamReader streamReader = new InputStreamReader(stream, "UTF8");
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
+        
         ArrayList<String> al = new ArrayList<String>();
 
-        while (scan.hasNextLine()) {
-            al.add(scan.nextLine());
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            al.add(line);
         }
+
+        bufferedReader.close();
         return al;
     }
 
@@ -184,10 +197,10 @@ public class BashHelper {
      * possible, after 2 seconds, the process is killed instead.
      *
      * setAllowStopProcessGracefully(...) to allow this.
-     * 
+     *
      * @param p
      * @param pid
-     * @return 
+     * @return
      */
     public static boolean stopProcess(Process p, String pid) {
         return stopProcess(p, pid, 2000);
