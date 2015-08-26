@@ -6,7 +6,6 @@
  */
 package be.sizingservers.vapus.agent;
 
-import be.sizingservers.vapus.agent.util.BandwidthTest;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -295,9 +294,6 @@ public abstract class Server {
                     } else if (message.startsWith("{\"timestamp\":")) {
                         this.monitor.setWIW(message);
                         message = "200";
-                    } else if (message.equals("bandwidth")){
-                        BandwidthTest.GetDownloadSpeed(this.socket);
-                        BandwidthTest.GetUploadSpeed(this.socket);
                     } else {
                         message = "404";
                     }
