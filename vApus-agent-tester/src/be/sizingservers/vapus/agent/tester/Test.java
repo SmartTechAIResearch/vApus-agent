@@ -6,7 +6,6 @@
  */
 package be.sizingservers.vapus.agent.tester;
 
-import be.sizingservers.vapus.agent.util.BandwidthTest;
 import be.sizingservers.vapus.agent.util.Combiner;
 import be.sizingservers.vapus.agent.util.CounterInfo;
 import be.sizingservers.vapus.agent.util.Entities;
@@ -278,30 +277,5 @@ public class Test extends Thread {
             Date time = Calendar.getInstance().getTime();
             System.out.println("Test " + this.id + " Parsed (" + df.format(time) + "): " + Combiner.combine(parsedCounters, " "));
         }
-    }
-
-    /**
-     * Gets the bandwidths if connected but not started! You should only do this
-     * with one client at a time. Event then the numbers won't be entirely
-     * correct due to other traffic on the Nics and the fact that we are only
-     * measuring 'TCP bandwidth'.
-     *
-     * @return Bandwidth object containing up and down speed.
-     */
-    private Bandwidth testBandwidth(Socket socket, BufferedWriter out, BufferedReader in) throws IOException, Exception {
-        write(out, "bandwidth");
-        
-        Bandwidth bw = new Bandwidth();
-        bw.UploadSpeedInMbps = BandwidthTest.GetUploadSpeed(socket);
-        bw.DownloadSpeedInMbps = BandwidthTest.GetDownloadSpeed(socket);
-        
-        read(in, "bandwidth");
-        return bw;
-    }
-
-    private class Bandwidth {
-
-        public double DownloadSpeedInMbps;
-        public double UploadSpeedInMbps;
     }
 }
