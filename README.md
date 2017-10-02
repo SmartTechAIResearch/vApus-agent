@@ -120,7 +120,7 @@ Redundant whitespace, except for \n, does not matter, but should rather not occu
 
 The same for if counters are dropped for some reason, e.g. only half of a JSON message received.
 
-===Raw data===
+## Raw data
 Or data sent not using the earlier explained format.
 
 Raw data is highly discouraged but needed when dealing with third-party or "rogue Sizing Servers employee" agents. This is also the case for hardware monitors, for example power meters.
