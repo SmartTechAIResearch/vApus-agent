@@ -25,3 +25,6 @@ PS: Take a look at the readme files in the packages.
 PPS:
 http://pidome.wordpress.com/2013/09/09/jenkins-netbeans-and-ant-follow-up-missing-libraries-in-manifest-file/
 https://ant.apache.org/manual/running.html ant command line options
+
+PPPS:
+Read the readme for vApus.Monitor.Sources, the client side of the agents.
