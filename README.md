@@ -15,7 +15,7 @@ Above mentioned projects are (NetBeans) Ant projects because I do not like Maven
 Without the copy libs your jar won't be complete!
 
 
-JDK 1.6 is used to be compatible with older JRE's on other peoples servers.
+JDK 1.6 is used to be compatible with older JRE's on other peoples servers. **jdk-6u45-windows-x64.exe** (installer) is included in this repo.
 
 
 There are 2 scripts available to run agents as daemons on Linux in the daemon folder. non Sucky Service Manager can be found in the nssm folder for running Windows agents as a service.
