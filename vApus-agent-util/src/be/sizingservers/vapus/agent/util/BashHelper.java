@@ -224,20 +224,24 @@ public class BashHelper {
                     stopExecutedCommand(pid);
 
                     int slept = 0;
-                    String[] pids;
+                    String output;
                     do {
                         ProcessBuilder builder = new ProcessBuilder(BashHelper.bash, "-c", "ps aux | grep -w " + pid + " | grep -v grep | awk '{print $2}'");
                         builder.redirectErrorStream(true);
 
-                        pids = getOutput(builder.start()).split("\\r?\\n");
+                        output = getOutput(builder.start());
+                        if(output.length() == 0) {
+                            break;
+                        }
+                        
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException ex) {
                             break;
                         }
-                    } while (pids.length != 0 && (slept += 100) != processExitTimeout);
+                    } while (output.length() != 0 && (slept += 100) != processExitTimeout);
 
-                    if (pids.length != 0) {
+                    if (output.length() != 0) {
                         return true;
                     }
                 }
@@ -278,7 +282,10 @@ public class BashHelper {
      */
     public static String getPIDExecutedCommand(String command) throws IOException {
         ProcessBuilder builder = new ProcessBuilder(BashHelper.bash, "-c", "ps aux | grep -w '" + command + "' | grep -v grep | awk '{print $2}'");
-        builder.redirectErrorStream(true);
+        //builder.redirectErrorStream(true); 
+        //  --> Getting a PID not work for complex commands.
+        //  Escaping is not straight forward.
+        //  We assume that there is no PID if this fails. Not the way to do it, but hey... 
 
         String[] pids = getOutput(builder.start()).split("\\r?\\n");
         String pid = pids[pids.length - 1].trim();
