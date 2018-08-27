@@ -1,4 +1,4 @@
-Copyright 2014 (c) Sizing Servers Lab
+2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT
 University College of West-Flanders, Department GKG * 
 Author(s):
     Dieter Vandroemme
@@ -6,7 +6,9 @@ Author(s):
 Preface
 ------------------------------
 All boilerplate code for Java based agents resides in be.sizingservers.vapus.agent in the vApus-agent project.
-It implements the communication protocol as stated in the Sizing Servers wiki: http://wiki.sizingservers.be/index.php/VApus-vApus-agent_communication_protocol
+It implements the communication protocol as stated in the Readme.md.
+
+Built using Netbeans 8.
 
 You should also add vApus-agent-util and gson-2.2.4 to libraries.
 
@@ -15,7 +17,7 @@ Important: These classes are coded against Java 6 for backwards compatibility re
 1) Writing an agent
 ------------------------------
 
-A good example is the vApus-dstat monitor.
+A good example is the vApus-proc monitor.
 
 1.1) Classes
 ------------------------------
@@ -41,8 +43,8 @@ You need 2 .properties files.
 
 Add a vApus-agent.properties to the default package. Use following as a template:
 
-    # Copyright 2014 (c) Sizing Servers Lab
-    # University College of West-Flanders, Department GKG
+    # 2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT
+    # * University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en)
     #
     # Author(s):
     # 	<insert your name here>
@@ -50,12 +52,12 @@ Add a vApus-agent.properties to the default package. Use following as a template
     # None of following properties can be ommited.
     
     # The name of the monitor.
-    name=vApus-dstat
+    name=vApus-proc
     
     #The version of this monitor.
     version=0.1
     
-    copyright=Copyright 2014 (c) Sizing Servers Lab\nUniversity College of West-Flanders, Department GKG
+    copyright=Sizing Servers Lab, affiliated with IT bachelor degree NMCT at University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en)
     
     #The port the server will listen at.
     defaultPort=5556
@@ -68,11 +70,11 @@ Add a vApus-agent.properties to the default package. Use following as a template
 
 Add a logging.properties to the default package. Use following as a template:
 
-    # Copyright 2014 (c) Sizing Servers Lab
-    # University College of West-Flanders, Department GKG
+    # 2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT
+    # University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en)
     #
     # Author(s):
-    # 	Dieter Vandroemme
+    # 	<insert your name here>
     
     # Execute locate logging.properties for example (default properties in jdk).
     
@@ -82,7 +84,7 @@ Add a logging.properties to the default package. Use following as a template:
     .level= SEVERE
     
     # Outputs in the apps dir. u% == unique number.
-    java.util.logging.FileHandler.pattern = vApus-dstat%u.log
+    java.util.logging.FileHandler.pattern = vApus-proc%u.log
     java.util.logging.FileHandler.limit = 50000
     java.util.logging.FileHandler.count = 1
     

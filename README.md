@@ -1,6 +1,6 @@
 # vApus-agent
 vApus-agent and vApus-agent-util hold all the base functionality to build a new monitoring agent, as described on our company wiki: http://wiki.sizingservers.be/index.php/VApus-vApus-agent_communication_protocol.
-If you want an example, take a look at for instance vApus-dstat.
+If you want an example, take a look at for instance vApus-proc.
 You can use vApus-agent-tester to , uhm, test your agent. You can do this in continuous integration if you want.
 
 
@@ -8,7 +8,7 @@ Copy the lib folder to a new vApus agent root folder and reference the libraries
 You can use this in your automated build process.
 
 
-Above mentioned projects are (NetBeans) Ant projects because I do not like Maven (I have to screw my folder structure to get it to work). Because NetBeans does 'magical stuff' to get compilation to work, you have to do something like this if you want to script builds:
+Above mentioned projects are (NetBeans 8) Ant projects because I do not like Maven (I have to screw my folder structure to get it to work). Because NetBeans does 'magical stuff' to get compilation to work, you have to do something like this if you want to script builds:
 
 	ant -f "%WORKSPACE%\vApus-wmi" -S -Dplatforms.JDK_1.6.home="C:\Program Files\Java\jdk1.6.0_45" -Dlibs.CopyLibs.classpath="C:\\Program Files\\NetBeans 8.0\\java\\ant\\extra\\org-netbeans-modules-java-j2seproject-copylibstask.jar" -Dnb.internal.action.name=rebuild clean jar
 	
@@ -125,4 +125,4 @@ Or data sent not using the earlier explained format.
 
 Raw data is highly discouraged but needed when dealing with third-party or "rogue Sizing Servers employee" agents. This is also the case for hardware monitors, for example power meters.
 
-Can be anything: binary/SOAP/JSON/YAML/other obscure format -serialized objects over TCP, UDP, HTTP, <fancy letter combo>P.
+Can be anything: binary/SOAP/JSON/YAML/other obscure format -serialized objects over TCP, UDP, HTTP, \<fancy letter combo\>P.

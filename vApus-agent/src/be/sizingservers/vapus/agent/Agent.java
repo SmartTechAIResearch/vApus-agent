@@ -1,6 +1,6 @@
 /*
- * Copyright 2014 (c) Sizing Servers Lab
- * University College of West-Flanders, Department GKG * 
+ * 2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT
+ * University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en) 
  * Author(s):
  * 	Dieter Vandroemme
  */
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Agent.main(args, new serverImplementation(), new monitorImplementation()) in
  * the body of the main fx. All stuff is automated for you.
  *
- * @author didjeeh
+*
  */
 public class Agent {
 

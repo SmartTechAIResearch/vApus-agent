@@ -1,6 +1,6 @@
 /*
- * Copyright 2014 (c) Sizing Servers Lab
- * University College of West-Flanders, Department GKG * 
+ * 2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT
+ * University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en) 
  * Author(s):
  * 	Dieter Vandroemme
  */
@@ -13,7 +13,7 @@ import java.util.logging.Level;
 /**
  * Holds all the default properties.
  *
- * @author didjeeh
+*
  */
 public class Properties {
 
@@ -72,7 +72,7 @@ public class Properties {
 
     /**
      * Reads the copyright notice from the file vApus-agent.properties (must be in the
-     * default package). The file must contain an entry like this: copyright=Copyright 2014 (c) Sizing Servers Lab\nUniversity College of West-Flanders, Department GKG
+     * default package). The file must contain an entry like this: copyright=Copyright 2014 Sizing Servers Lab, affiliated with IT bachelor degree NMCT\nUniversity College of West-Flanders, Department GKG
      *
      * @return copyright notice
      */
