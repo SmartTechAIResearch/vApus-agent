@@ -1,5 +1,5 @@
 # vApus-agent
-vApus-agent and vApus-agent-util hold all the base functionality to build a new monitoring agent, as described on our company wiki: http://wiki.sizingservers.be/index.php/VApus-vApus-agent_communication_protocol.
+vApus-agent and vApus-agent-util hold all the base functionality to build a new monitoring agent.
 If you want an example, take a look at for instance vApus-proc.
 You can use vApus-agent-tester to , uhm, test your agent. You can do this in continuous integration if you want.
 
