@@ -11,7 +11,7 @@ You can use this in your automated build process.
 Above mentioned projects are (NetBeans 8) Ant projects because I do not like Maven (I have to screw my folder structure to get it to work). Because NetBeans does 'magical stuff' to get compilation to work, you have to do something like this if you want to script builds:
 
 	ant -f "%WORKSPACE%\vApus-wmi" -S -Dplatforms.JDK_1.6.home="C:\Program Files\Java\jdk1.6.0_45" -Dlibs.CopyLibs.classpath="C:\\Program Files\\NetBeans 8.0\\java\\ant\\extra\\org-netbeans-modules-java-j2seproject-copylibstask.jar" -Dnb.internal.action.name=rebuild clean jar
-	
+
 Without the copy libs your jar won't be complete!
 
 
@@ -28,7 +28,7 @@ http://pidome.wordpress.com/2013/09/09/jenkins-netbeans-and-ant-follow-up-missin
 https://ant.apache.org/manual/running.html ant command line options
 
 PPPS:
-Read the readme for vApus.Monitor.Sources, the client side of the agents.
+Read the readme for vApus.Monitor.Sources, the client side of the agents. Read the vApus help to learn about automating builds using Jenkins.
 
 # vApus-vApus-agent communication protocol
 Communication should happen over TCP, since it is more reliable than UDP.
@@ -42,7 +42,7 @@ Best practice is that in few cases more than one client at a time connects to an
 ## JSON messages
 The message format works in any programming language since messages are represented as UTF8 encoded strings.
 
-Out: Can be {"key":"value"} or just key. 
+Out: Can be {"key":"value"} or just key.
 In: Can be {"key":"value"} or just value.
 
 In fact, key-value pairs are only used for headers and counters.
@@ -73,7 +73,7 @@ Redundant whitespace, except for \n, does not matter, but should rather not occu
 
  Out: **wdyh**
       Read: what do you have.
- 
+
   In: **{"timestamp":0,"subs":[{"name":"entity","isAvailable":true,"subs":[{"name":"header","subs":[{"name":"subheader"},**
       **{"name":"subheader"}]},{"name":"header","subs":[{"name":"subheader"},{"name":"subheader"}]}]}]}**
       This is an example how wdyh should be formatted; Null values should be ignored.
@@ -85,13 +85,13 @@ Redundant whitespace, except for \n, does not matter, but should rather not occu
  Out: **{"timestamp":0,"subs":[{"name":"entity","isAvailable":true,"subs":[{"name":"header","subs":[{"name":"subheader"},**
       **{"name":"subheader"}]},{"name":"header","subs":[{"name":"subheader"},{"name":"subheader"}]}]}]}**
       Where you want to receive counters for in the same format as wdyh. Order does not matter. (wiw, what I want)
- 
+
   In: **200**
       HTTP OK status code.
 
  Out: **start**
       Starts the monitor, the servers starts sending counters back periodically.
- 
+
   In: **200**
       HTTP OK status code.
 
@@ -102,12 +102,12 @@ Redundant whitespace, except for \n, does not matter, but should rather not occu
       if applicable.
       A counter can be anything, a status (OK, N/A), a double with or without the unit (for instance Watt),...
       If a counter is invalid / could not be determined "-1" must be written at the appropriate place.
-      
+
       The timestamp must be milliseconds since epoch (1970/1/1) universal time. Make a delta client-side to correct time differences.
 
  Out: **stop**
       The monitor instance for the connection is destroyed, the socket is closed.
- 
+
   In: **200**
       HTTP OK status code.
 
